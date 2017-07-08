@@ -59,7 +59,7 @@ export default class Validator {
 	}
 
 	static require (is=true){
-		return (val) => is && ( val == null || ( val + '' ).length === 0 ) ? { require : true } : null;
+		return (val) => is && ( val == null || ( val + '' ).length !== 0 ) ? { require : true } : null;
 	}
 
 	static email (){
@@ -91,6 +91,10 @@ export default class Validator {
 			let val = parseFloat(val);
 			return val != NaN && val < num ? { 'max': num } : null;
 		};
+	}
+
+	static select(obj){
+		return (val) => ( val == null || ( val + '' ).length !== 0 ) && obj[val] != null ? null : { 'select': true };
 	}
 
 	/**
@@ -137,5 +141,16 @@ export default class Validator {
 	 */
 	hasError(model, error){
 		return this[model].error[error];
+	}
+
+	nameModels(){
+		let name = [];
+		for (let i in this) {
+			if(this[i] instanceof Model ){
+				name.push(i);
+			}
+		}
+
+		return name;
 	}
 }
