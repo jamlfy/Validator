@@ -43,37 +43,38 @@ In reactNative
 		constructor(props){
 			super(props);
 
-			this.form = new Validator(MyCool.myForm);
+			this.state = {
+				form = new Validator(MyCool.myForm)
+			};
 		}
 
 		change (model, val){
-			this.form.is(model, val);
-			this.setState({ data : this.form.value });
+			this.setState({ form : this.state.form.is(model, val) });
 		}
 
 		render(){
 			return <View>
 				<TextInput
-					style={this.form.name.invalid ? style.error : style.normal }
-					value={this.state.data.name}
+					style={this.state.form.name.invalid ? style.error : style.normal }
+					value={this.state.form.name.value}
 					onChangeText={this.change.bind(this, 'name')}/>
 				<TextInput
-					style={this.form.email.hasError('email') ? style.error : style.normal  }
-					value={this.state.data.email}
+					style={this.state.form.email.hasError('email') ? style.error : style.normal  }
+					value={this.state.form.email.value}
 					onChangeText={this.change.bind(this, 'email')}/>
 				<TextInput
-					style={this.form.years.hasError('min') ? style.error : style.normal  }
-					value={this.state.data.years}
+					style={this.state.form.years.hasError('min') ? style.error : style.normal  }
+					value={this.state.form.years.value}
 					onChangeText={this.change.bind(this, 'years')}/>
 				<TextInput
-					style={this.form.url.hasError('patern') ? style.error : style.normal  }
+					style={this.state.form.url.hasError('patern') ? style.error : style.normal  }
 					onChangeText={this.change.bind(this, 'url')}/>
 				<TextInput
-					style={this.form.coment.valid ? style.error : style.normal  }
-					value={this.state.data.coment}
+					style={this.state.form.coment.valid ? style.error : style.normal  }
+					value={this.state.form.coment.value}
 					onChangeText={this.change.bind(this, 'coment')}/>
-				<Text>The form is {this.form.valid ? 'VALID' : 'INVALID'}</Text>
-				<Text>The form is {this.form.invalid ? 'ERROR' : 'NOT ERROR'}</Text>
+				<Text>The form is {this.state.form.valid ? 'VALID' : 'INVALID'}</Text>
+				<Text>The form is {this.state.form.invalid ? 'ERROR' : 'NOT ERROR'}</Text>
 			</View>
 		}
 	}
