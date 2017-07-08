@@ -1,0 +1,22 @@
+{
+  "name": "validator-models",
+  "version": "1.0.0",
+  "description": "Is a validor for values in vainilla and react",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/alejonext/Validator.git"
+  },
+  "keywords": [
+    "validator"
+  ],
+  "author": "alejonext <alejonext@gmail.com>",
+  "license": "GPL-3.0",
+  "bugs": {
+    "url": "https://github.com/alejonext/Validator/issues"
+  },
+  "homepage": "https://github.com/alejonext/Validator#readme"
+}
