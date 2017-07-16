@@ -12,12 +12,12 @@ export class Model {
 		this.error = {};
 
 		for (var i = this.validators.length - 1; i >= 0; i--) {
-			let errors = this.validators[i](this.value);
-			if(errors){
-				this.error = { errors, ...this.error };
+			let error = this.validators[i](this.value);
+			if(error){
+				Object.assign(this.error, error);
 			} 
 
-			this.valid = errors === null;
+			this.valid = error === null;
 		}
 
 		this.invalid = !this.valid;
