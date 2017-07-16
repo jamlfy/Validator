@@ -71,7 +71,7 @@ export default class Validator {
 	}
 
 	static maxLength (num){
-		return (val) => ( val + '' ).length <= num ? { maxLength : true } : null;
+		return (val) => ( val + '' ).length > num ? { maxLength : true } : null;
 	}
 
 	static patern (part){
@@ -81,19 +81,19 @@ export default class Validator {
 
 	static max(num){
 		return (val) => {
-			let val = parseFloat(val);
-			return val != NaN && val > num ? { 'max': num } : null;
+			let vax = parseFloat(val);
+			return vax != NaN && vax > num ? { 'max': num } : null;
 		};
 	}
 
 	static min(num){
 		return (val) => {
-			let val = parseFloat(val);
-			return val != NaN && val < num ? { 'max': num } : null;
+			let vax = parseFloat(val);
+			return vax != NaN && vax < num ? { 'max': num } : null;
 		};
 	}
 
-	static select(obj){
+	static select (obj){
 		return (val) => ( val == null || ( val + '' ).length !== 0 ) && obj[val] != null ? null : { 'select': true };
 	}
 
@@ -121,10 +121,7 @@ export default class Validator {
 		for (let i in this) {
 			if(this[i] instanceof Model ){
 				this.values[i] = this[i].value;
-
-				if(this[i].hasError('require')){
-					this.valid = this[i].valid && this.valid;
-				}
+				this.valid = this[i].valid && this.valid;
 			}
 		}
 
