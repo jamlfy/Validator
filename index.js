@@ -14,7 +14,7 @@ export class Model {
 		for (var i = this.validators.length - 1; i >= 0; i--) {
 			let errors = this.validators[i](this.value);
 			if(errors){
-				this.error = { errors, ..this.error };
+				this.error = { errors, ...this.error };
 			} 
 
 			this.valid = errors === null;
