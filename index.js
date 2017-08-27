@@ -12,19 +12,22 @@ export class Model {
 		this.error = {};
 
 		for (var i = this.validators.length - 1; i >= 0; i--) {
-			let error = this.validators[i](this.value);
+			var error = this.validators[i](this.value);
+
 			if(error){
 				Object.assign(this.error, error);
-			} 
-
-			this.valid = error === null;
+			}
 		}
 
-		this.invalid = !this.valid;
+		for (var i in this.error) {
+			this.invalid = !!this.error[i];
+		}
+
+		this.valid = !this.invalid;
 	}
 
 	hasError(name){
-		return this.error[name];
+		return !!this.error[name];
 	}
 }
 
@@ -52,14 +55,13 @@ export class Model {
  * 
  */
 
-
 export default class Validator {
-	static free (){
-		return (val) => null;
-	}
-
 	static require (is=true){
 		return (val) => is && ( val == null || ( val + '' ).length !== 0 ) ? { require : true } : null;
+	}
+
+	static free (){
+		return Validator.require(false);
 	}
 
 	static email (){
@@ -79,14 +81,14 @@ export default class Validator {
 		return (val) => pats.test(val) ? null : { 'pattern': pats.toString() };
 	}
 
-	static max(num){
+	static max (num){
 		return (val) => {
 			let vax = parseFloat(val);
 			return vax != NaN && vax > num ? { 'max': num } : null;
 		};
 	}
 
-	static min(num){
+	static min (num){
 		return (val) => {
 			let vax = parseFloat(val);
 			return vax != NaN && vax < num ? { 'max': num } : null;
@@ -103,7 +105,7 @@ export default class Validator {
 	 */
 	constructor(models){
 		for (let i in models) {
-			this[models[i]] = new Model(models[i]);
+			this[i] = new Model(models[i]);
 		}
 	}
 
