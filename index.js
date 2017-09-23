@@ -33,6 +33,8 @@ export class Model {
 		for (var i in this.error) {
 			this.invalid = !!this.error[i];
 		}
+
+		return this;
 	}
 
 	get valid(){
@@ -80,7 +82,7 @@ export default class Validator {
 	 * @return {Any}
 	 */
 	static require (is=true){
-		return (val) => is && ( val == null || ( val + '' ).length !== 0 ) ?
+		return (val) => is && ( val == null || ( val + '' ).length === 0 ) ?
 			{ require : true } : false;
 	}
 
@@ -154,7 +156,7 @@ export default class Validator {
 		return (val) => {
 			let vax = parseFloat(val);
 			return vax != NaN && vax < num ?
-				{ 'max': num } : false;
+				{ 'max' : num } : false;
 		};
 	}
 
