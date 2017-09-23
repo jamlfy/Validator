@@ -99,7 +99,7 @@ export default class Validator {
 	 */
 	static email (){
 		return (val) => EMAIL_REGEXP.test( val + '' ) ?
-			null : { email : true };
+			false : { email : true };
 	}
 
 	/**
@@ -130,7 +130,7 @@ export default class Validator {
 	static patern (part){
 		let pats = typeof part.test == 'function' ? part : new RegExp(part);
 		return (val) => pats.test(val) ?
-			null : { 'pattern': pats.toString() };
+			false : { 'pattern': pats.toString() };
 	}
 
 	/**
@@ -165,7 +165,7 @@ export default class Validator {
 	 */
 	static select (obj){
 		return (val) => ( val == null || ( val + '' ).length !== 0 ) && obj[val] != null ?
-			null : { 'select': true };
+			false : { 'select': true };
 	}
 
 	model = {};
